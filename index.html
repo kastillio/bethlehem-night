@@ -60,10 +60,6 @@
         width: 90%;
         text-align: center;
     }
-    #modal img {
-        max-width: 100%;
-        border-radius: 10px;
-    }
     #close-btn {
         margin-top: 20px;
         padding: 10px 20px;
@@ -83,57 +79,10 @@
 <h1 id="title">Інтерактивна Карта "Вифлеємська Ніч"</h1>
 
 <div class="language-switch">
-    <button onclick="setLanguage('uk')">Українська</button>
-    <button onclick="setLanguage('en')">English</button>
+    <button id="uk-btn">Українська</button>
+    <button id="en-btn">English</button>
 </div>
 
-
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Вифлеємська Ніч - Інтерактивна Карта</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-    }
-    h1 {
-        color: #333;
-    }
-    .map {
-        max-width: 800px;
-        width: 100%;
-        background: #fff;
-        border: 2px solid #333;
-        padding: 20px;
-        border-radius: 10px;
-        position: relative;
-    }
-    .zone {
-        display: block;
-        margin: 10px 0;
-        padding: 10px;
-        background-color: #ffd700;
-        color: #333;
-        text-align: center;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    .zone:hover {
-        background-color: #ffa500;
-    }
-</style>
-</head>
-<body>
-
-<h1>Інтерактивна Карта "Вифлеємська Ніч"</h1>
 <div class="map">
     <div class="zone" id="shepherds">Пастухи</div>
     <div class="zone" id="registration">Реєстрація</div>
@@ -147,62 +96,70 @@
     <div class="zone" id="photo-zone">Фотозона</div>
 </div>
 
+<div id="modal">
+    <div id="modal-content">
+        <h2 id="modal-title"></h2>
+        <p id="modal-description"></p>
+        <button id="close-btn">Закрити / Close</button>
+    </div>
+</div>
 
 <script>
+const data = {
+    uk: {
+        title: "Інтерактивна Карта \"Вифлеємська Ніч\"",
+        shepherds: { title: "Пастухи", description: "Пастухи розповідають дітям про диво та добру новину." },
+        registration: { title: "Реєстрація", description: "Римські солдати проводять перепис населення." },
+        carpenter: { title: "Цех тесляра", description: "Тесляр демонструє роботу з деревом." },
+        scribe: { title: "Намет писаря", description: "Писар пояснює значення імені Ісус." },
+        well: { title: "Вифлеємська криниця", description: "Діти можуть напоїти тварин біля криниці." },
+        bakery: { title: "Пекарня", description: "Діти прикрашають печиво." },
+        spices: { title: "Магазин спецій", description: "Діти обирають спеції та дізнаються про їх використання." },
+        wiseMen: { title: "Мудреці", description: "Мудреці розповідають про подарунки Ісусу." },
+        stable: { title: "Стайня", description: "Марія та Йосип діляться своєю історією." },
+        photoZone: { title: "Фотозона", description: "Діти можуть зробити фото з персонажами." }
+    },
+    en: {
+        title: "Interactive Map \"Bethlehem Night\"",
+        shepherds: { title: "Shepherds", description: "The shepherds share the miracle and good news." },
+        registration: { title: "Registration", description: "Roman soldiers conduct a census." },
+        carpenter: { title: "Carpenter's Workshop", description: "The carpenter shows woodworking." },
+        scribe: { title: "Scribe's Tent", description: "The scribe explains Jesus' name." },
+        well: { title: "Bethlehem Well", description: "Children can water animals." },
+        bakery: { title: "Bakery", description: "Children decorate cookies." },
+        spices: { title: "Spice Shop", description: "Children learn about spices." },
+        wiseMen: { title: "Wise Men", description: "The wise men tell about the gifts." },
+        stable: { title: "Stable", description: "Mary and Joseph share their story." },
+        photoZone: { title: "Photo Zone", description: "Children can take photos with characters." }
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-    let currentLanguage = 'uk';
-
-    document.getElementById('uk-btn').addEventListener('click', () => {
-        setLanguage('uk');
-        updateZoneTexts();
-    });
-
-    document.getElementById('en-btn').addEventListener('click', () => {
-        setLanguage('en');
-        updateZoneTexts();
+    const languageButtons = ['uk-btn', 'en-btn'];
+    languageButtons.forEach(btnId => {
+        document.getElementById(btnId).addEventListener('click', () => {
+            const lang = btnId === 'uk-btn' ? 'uk' : 'en';
+            setLanguage(lang);
+            updateZoneTexts();
+        });
     });
 
     function setLanguage(lang) {
-        currentLanguage = lang;
-        console.log("Мова змінена на:", lang);
+        document.getElementById('title').textContent = data[lang].title;
     }
 
     function updateZoneTexts() {
-        const zones = ['shepherds', 'registration', 'carpenter', 'scribe', 'well', 'bakery', 'spices', 'wise-men', 'stable', 'photo-zone'];
-        zones.forEach(zoneId => {
+        Object.keys(data.uk).forEach(zoneId => {
             const element = document.getElementById(zoneId);
-            const info = data[currentLanguage][zoneId.replace('-', '')];
-            if (element && info) {
-                element.textContent = info.title;
-                element.onclick = () => showInfo(info.title, info.description);
-            } else {
-                console.error("Елемент з ID не знайдено:", zoneId);
+            if (element) {
+                element.textContent = data[currentLanguage][zoneId].title;
             }
         });
-        console.log("Текст кнопок зон оновлено для мови:", currentLanguage);
     }
 
-    function showInfo(title, description) {
-        document.getElementById('modal-title').textContent = title;
-        document.getElementById('modal-description').textContent = description;
-        document.getElementById('modal').style.visibility = 'visible';
-        document.getElementById('modal').style.opacity = '1';
-    }
-
-    document.getElementById('close-btn').addEventListener('click', closeModal);
-
-    function closeModal() {
-        document.getElementById('modal').style.visibility = 'hidden';
-        document.getElementById('modal').style.opacity = '0';
-    }
-
-    // Ініціалізація текстів при завантаженні сторінки
     updateZoneTexts();
 });
 </script>
-
-
-
 
 </body>
 </html>
