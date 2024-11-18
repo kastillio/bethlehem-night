@@ -172,24 +172,24 @@ const data = {
     uk: {
         shepherds: { title: "Пастухи", description: "Пастухи розповідають дітям про диво та добру новину." },
         registration: { title: "Реєстрація", description: "Римські солдати проводять перепис населення." },
-        carpenter: { title: "Цех тесляра", description: "Тесляр розповідає про Йосипа та показує роботу з деревом." },
+        carpenter: { title: "Цех тесляра", description: "Тесляр демонструє роботу з деревом." },
         scribe: { title: "Намет писаря", description: "Писар пояснює значення імені Ісус." },
         well: { title: "Вифлеємська криниця", description: "Діти можуть напоїти тварин біля криниці." },
-        bakery: { title: "Пекарня", description: "У пекарні діти прикрашають печиво." },
+        bakery: { title: "Пекарня", description: "Діти прикрашають печиво та дізнаються про випічку." },
         spices: { title: "Магазин спецій", description: "Діти можуть вибрати спеції та дізнатися про їх використання." },
-        wiseMen: { title: "Мудреці", description: "Мудреці розповідають про подарунки для Ісуса." },
+        wiseMen: { title: "Мудреці", description: "Мудреці розповідають про подарунки Ісусу." },
         stable: { title: "Стайня", description: "Марія та Йосип розповідають свою історію." },
         photoZone: { title: "Фотозона", description: "Діти можуть зробити фото з персонажами." }
     },
     en: {
         shepherds: { title: "Shepherds", description: "The shepherds share the miracle and good news." },
         registration: { title: "Registration", description: "Roman soldiers conduct a census." },
-        carpenter: { title: "Carpenter's Workshop", description: "The carpenter talks about Joseph and demonstrates woodworking." },
+        carpenter: { title: "Carpenter's Workshop", description: "The carpenter demonstrates woodworking." },
         scribe: { title: "Scribe's Tent", description: "The scribe explains the meaning of Jesus' name." },
         well: { title: "Bethlehem Well", description: "Children can water the animals at the well." },
-        bakery: { title: "Bakery", description: "In the bakery, children decorate cookies." },
-        spices: { title: "Spice Shop", description: "Children can choose spices and learn about their uses." },
-        wiseMen: { title: "Wise Men", description: "The wise men share stories about the gifts for Jesus." },
+        bakery: { title: "Bakery", description: "Children decorate cookies and learn about baking." },
+        spices: { title: "Spice Shop", description: "Children choose spices and learn about their uses." },
+        wiseMen: { title: "Wise Men", description: "The wise men talk about the gifts for Jesus." },
         stable: { title: "Stable", description: "Mary and Joseph share their story." },
         photoZone: { title: "Photo Zone", description: "Children can take a photo with the characters." }
     }
@@ -223,6 +223,8 @@ function updateZoneTexts() {
             element.onclick = () => showInfo(info.title, info.description);
         }
     });
+
+    console.log("Текст кнопок зон оновлено для мови:", currentLanguage);
 }
 
 function showInfo(title, description) {
@@ -242,6 +244,7 @@ function closeModal() {
 // Ініціалізація текстів при завантаженні сторінки
 updateZoneTexts();
 </script>
+
 
 
 
