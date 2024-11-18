@@ -87,13 +87,75 @@
     <button onclick="setLanguage('en')">English</button>
 </div>
 
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вифлеємська Ніч - Інтерактивна Карта</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+    h1 {
+        color: #333;
+    }
+    .map {
+        max-width: 800px;
+        width: 100%;
+        background: #fff;
+        border: 2px solid #333;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+    }
+    .zone {
+        display: block;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #ffd700;
+        color: #333;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .zone:hover {
+        background-color: #ffa500;
+    }
+</style>
+</head>
+<body>
+
+<h1>Інтерактивна Карта "Вифлеємська Ніч"</h1>
 <div class="map">
-    <div class="zone" onclick="showInfo('shepherds')">Пастухи</div>
-    <div class="zone" onclick="showInfo('registration')">Реєстрація</div>
-    <div class="zone" onclick="showInfo('carpenter')">Цех тесляра</div>
-    <div class="zone" onclick="showInfo('scribe')">Намет писаря</div>
-    <div class="zone" onclick="showInfo('well')">Вифлеємська криниця</div>
+    <div class="zone" onclick="showInfo('Пастухи', 'Пастухи розповідають дітям про диво, яке вони бачили, та чому саме Бог обрав їх для передачі доброї новини.')">Пастухи</div>
+    <div class="zone" onclick="showInfo('Реєстрація', 'Римські солдати проводять перепис населення, рахують членів родини та видають карти для подорожі.')">Реєстрація</div>
+    <div class="zone" onclick="showInfo('Цех тесляра', 'Тесляр розповідає про Йосипа, який шукає місце в готелі, та показує роботу з деревом.')">Цех тесляра</div>
+    <div class="zone" onclick="showInfo('Намет писаря', 'Писар пояснює значення імені Ісус та розповідає про важливість Його народження.')">Намет писаря</div>
+    <div class="zone" onclick="showInfo('Вифлеємська криниця', 'Діти можуть "напоїти" тварин біля криниці та дізнатися про традиції.')">Вифлеємська криниця</div>
+    <div class="zone" onclick="showInfo('Пекарня', 'У пекарні діти прикрашають печиво та дізнаються про випічку у Вифлеємі.')">Пекарня</div>
+    <div class="zone" onclick="showInfo('Магазин спецій', 'Діти можуть вибрати спеції та дізнатися про їх запахи та використання.')">Магазин спецій</div>
+    <div class="zone" onclick="showInfo('Мудреці', 'Мудреці розповідають про подарунки, які вони принесли Ісусу, та дають дітям невеличке завдання.')">Мудреці</div>
+    <div class="zone" onclick="showInfo('Стайня', 'Марія та Йосип розповідають свою історію та пояснюють, чому ця дитина особлива.')">Стайня</div>
+    <div class="zone" onclick="showInfo('Фотозона', 'Діти можуть зробити віртуальне фото з персонажами вифлеємської ночі.')">Фотозона</div>
 </div>
+
+<script>
+function showInfo(title, message) {
+    alert(title + ": " + message);
+}
+</script>
+
+</body>
+</html>
+
 
 <div id="modal">
     <div id="modal-content">
