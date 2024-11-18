@@ -105,86 +105,71 @@
 </div>
 
 <script>
-const data = {
-    uk: {
-        title: "Інтерактивна Карта \"Вифлеємська Ніч\"",
-        shepherds: {
-            title: "Пастухи",
-            description: "Пастухи розповідають дітям про диво та добру новину.",
-            image: "shepherds.jpg"
-        },
-        registration: {
-            title: "Реєстрація",
-            description: "Римські солдати проводять перепис населення.",
-            image: "registration.jpg"
-        },
-        carpenter: {
-            title: "Цех тесляра",
-            description: "Тесляр демонструє роботу з деревом.",
-            image: "carpenter.jpg"
-        },
-        scribe: {
-            title: "Намет писаря",
-            description: "Писар розповідає про значення імені Ісус.",
-            image: "scribe.jpg"
-        },
-        well: {
-            title: "Вифлеємська криниця",
-            description: "Діти можуть напоїти тварин.",
-            image: "well.jpg"
-        }
-    },
-    en: {
-        title: "Interactive Map \"Bethlehem Night\"",
-        shepherds: {
-            title: "Shepherds",
-            description: "The shepherds share the miracle and good news.",
-            image: "shepherds.jpg"
-        },
-        registration: {
-            title: "Registration",
-            description: "Roman soldiers conduct a census.",
-            image: "registration.jpg"
-        },
-        carpenter: {
-            title: "Carpenter's Workshop",
-            description: "The carpenter demonstrates woodworking.",
-            image: "carpenter.jpg"
-        },
-        scribe: {
-            title: "Scribe's Tent",
-            description: "The scribe talks about the meaning of Jesus' name.",
-            image: "scribe.jpg"
-        },
-        well: {
-            title: "Bethlehem Well",
-            description: "Children can give water to animals.",
-            image: "well.jpg"
-        }
-    }
-};
-
 let currentLanguage = 'uk';
+
+document.getElementById('uk-btn').addEventListener('click', () => {
+    setLanguage('uk');
+    updateZoneTexts();
+});
+
+document.getElementById('en-btn').addEventListener('click', () => {
+    setLanguage('en');
+    updateZoneTexts();
+});
 
 function setLanguage(lang) {
     currentLanguage = lang;
-    document.getElementById('title').textContent = data[lang].title;
+    const languageData = data[lang];
+
+    if (!languageData) {
+        console.error("Мовні дані не знайдено для мови:", lang);
+        return;
+    }
+
+    // Оновлення заголовку
+    document.getElementById('title').textContent = languageData.title;
+
+    console.log("Мова успішно встановлена на:", lang);
+}
+
+// Функція для оновлення тексту кнопок зон
+function updateZoneTexts() {
+    const languageData = data[currentLanguage];
+    const zones = ['shepherds', 'registration', 'carpenter', 'scribe', 'well'];
+
+    zones.forEach(zoneId => {
+        const element = document.getElementById(zoneId);
+        if (element) {
+            element.textContent = languageData[zoneId].title;
+        } else {
+            console.error("Елемент з ID не знайдено:", zoneId);
+        }
+    });
+    console.log("Текст кнопок зон оновлено для мови:", currentLanguage);
 }
 
 function showInfo(zone) {
     const info = data[currentLanguage][zone];
-    document.getElementById('modal-title').textContent = info.title;
-    document.getElementById('modal-description').textContent = info.description;
-    document.getElementById('modal-image').src = info.image;
-    document.getElementById('modal').style.visibility = 'visible';
-    document.getElementById('modal').style.opacity = '1';
+    if (info) {
+        document.getElementById('modal-title').textContent = info.title;
+        document.getElementById('modal-description').textContent = info.description;
+        document.getElementById('modal').style.visibility = 'visible';
+        document.getElementById('modal').style.opacity = '1';
+    }
 }
+
+document.getElementById('close-btn').addEventListener('click', closeModal);
+
+['shepherds', 'registration', 'carpenter', 'scribe', 'well'].forEach(id => {
+    document.getElementById(id).addEventListener('click', () => showInfo(id));
+});
 
 function closeModal() {
     document.getElementById('modal').style.visibility = 'hidden';
     document.getElementById('modal').style.opacity = '0';
 }
 </script>
+
 
 </body>
 </html>
