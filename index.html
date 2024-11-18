@@ -149,100 +149,56 @@
 
 
 <script>
-function showInfo(title, message) {
-    alert(title + ": " + message);
-}
-</script>
+document.addEventListener('DOMContentLoaded', () => {
+    let currentLanguage = 'uk';
 
-</body>
-</html>
-
-
-<div id="modal">
-    <div id="modal-content">
-        <h2 id="modal-title"></h2>
-        <img id="modal-image" src="" alt="">
-        <p id="modal-description"></p>
-        <button id="close-btn" onclick="closeModal()">Закрити / Close</button>
-    </div>
-</div>
-
-<script>
-const data = {
-    uk: {
-        shepherds: { title: "Пастухи", description: "Пастухи розповідають дітям про диво та добру новину." },
-        registration: { title: "Реєстрація", description: "Римські солдати проводять перепис населення." },
-        carpenter: { title: "Цех тесляра", description: "Тесляр демонструє роботу з деревом." },
-        scribe: { title: "Намет писаря", description: "Писар пояснює значення імені Ісус." },
-        well: { title: "Вифлеємська криниця", description: "Діти можуть напоїти тварин біля криниці." },
-        bakery: { title: "Пекарня", description: "Діти прикрашають печиво та дізнаються про випічку." },
-        spices: { title: "Магазин спецій", description: "Діти можуть вибрати спеції та дізнатися про їх використання." },
-        wiseMen: { title: "Мудреці", description: "Мудреці розповідають про подарунки Ісусу." },
-        stable: { title: "Стайня", description: "Марія та Йосип розповідають свою історію." },
-        photoZone: { title: "Фотозона", description: "Діти можуть зробити фото з персонажами." }
-    },
-    en: {
-        shepherds: { title: "Shepherds", description: "The shepherds share the miracle and good news." },
-        registration: { title: "Registration", description: "Roman soldiers conduct a census." },
-        carpenter: { title: "Carpenter's Workshop", description: "The carpenter demonstrates woodworking." },
-        scribe: { title: "Scribe's Tent", description: "The scribe explains the meaning of Jesus' name." },
-        well: { title: "Bethlehem Well", description: "Children can water the animals at the well." },
-        bakery: { title: "Bakery", description: "Children decorate cookies and learn about baking." },
-        spices: { title: "Spice Shop", description: "Children choose spices and learn about their uses." },
-        wiseMen: { title: "Wise Men", description: "The wise men talk about the gifts for Jesus." },
-        stable: { title: "Stable", description: "Mary and Joseph share their story." },
-        photoZone: { title: "Photo Zone", description: "Children can take a photo with the characters." }
-    }
-};
-
-let currentLanguage = 'uk';
-
-document.getElementById('uk-btn').addEventListener('click', () => {
-    setLanguage('uk');
-    updateZoneTexts();
-});
-
-document.getElementById('en-btn').addEventListener('click', () => {
-    setLanguage('en');
-    updateZoneTexts();
-});
-
-function setLanguage(lang) {
-    currentLanguage = lang;
-    console.log("Мова змінена на:", lang);
-}
-
-function updateZoneTexts() {
-    const zones = ['shepherds', 'registration', 'carpenter', 'scribe', 'well', 'bakery', 'spices', 'wise-men', 'stable', 'photo-zone'];
-
-    zones.forEach(zoneId => {
-        const element = document.getElementById(zoneId);
-        const info = data[currentLanguage][zoneId.replace('-', '')];
-        if (element && info) {
-            element.textContent = info.title;
-            element.onclick = () => showInfo(info.title, info.description);
-        }
+    document.getElementById('uk-btn').addEventListener('click', () => {
+        setLanguage('uk');
+        updateZoneTexts();
     });
 
-    console.log("Текст кнопок зон оновлено для мови:", currentLanguage);
-}
+    document.getElementById('en-btn').addEventListener('click', () => {
+        setLanguage('en');
+        updateZoneTexts();
+    });
 
-function showInfo(title, description) {
-    document.getElementById('modal-title').textContent = title;
-    document.getElementById('modal-description').textContent = description;
-    document.getElementById('modal').style.visibility = 'visible';
-    document.getElementById('modal').style.opacity = '1';
-}
+    function setLanguage(lang) {
+        currentLanguage = lang;
+        console.log("Мова змінена на:", lang);
+    }
 
-document.getElementById('close-btn').addEventListener('click', closeModal);
+    function updateZoneTexts() {
+        const zones = ['shepherds', 'registration', 'carpenter', 'scribe', 'well', 'bakery', 'spices', 'wise-men', 'stable', 'photo-zone'];
+        zones.forEach(zoneId => {
+            const element = document.getElementById(zoneId);
+            const info = data[currentLanguage][zoneId.replace('-', '')];
+            if (element && info) {
+                element.textContent = info.title;
+                element.onclick = () => showInfo(info.title, info.description);
+            } else {
+                console.error("Елемент з ID не знайдено:", zoneId);
+            }
+        });
+        console.log("Текст кнопок зон оновлено для мови:", currentLanguage);
+    }
 
-function closeModal() {
-    document.getElementById('modal').style.visibility = 'hidden';
-    document.getElementById('modal').style.opacity = '0';
-}
+    function showInfo(title, description) {
+        document.getElementById('modal-title').textContent = title;
+        document.getElementById('modal-description').textContent = description;
+        document.getElementById('modal').style.visibility = 'visible';
+        document.getElementById('modal').style.opacity = '1';
+    }
 
-// Ініціалізація текстів при завантаженні сторінки
-updateZoneTexts();
+    document.getElementById('close-btn').addEventListener('click', closeModal);
+
+    function closeModal() {
+        document.getElementById('modal').style.visibility = 'hidden';
+        document.getElementById('modal').style.opacity = '0';
+    }
+
+    // Ініціалізація текстів при завантаженні сторінки
+    updateZoneTexts();
+});
 </script>
 
 
