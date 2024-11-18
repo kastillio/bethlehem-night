@@ -167,6 +167,33 @@ function showInfo(title, message) {
 </div>
 
 <script>
+const data = {
+    uk: {
+        shepherds: { title: "Пастухи", description: "Пастухи розповідають дітям про диво та добру новину." },
+        registration: { title: "Реєстрація", description: "Римські солдати проводять перепис населення." },
+        carpenter: { title: "Цех тесляра", description: "Тесляр розповідає про Йосипа та показує роботу з деревом." },
+        scribe: { title: "Намет писаря", description: "Писар пояснює значення імені Ісус." },
+        well: { title: "Вифлеємська криниця", description: "Діти можуть напоїти тварин біля криниці." },
+        bakery: { title: "Пекарня", description: "У пекарні діти прикрашають печиво." },
+        spices: { title: "Магазин спецій", description: "Діти можуть вибрати спеції та дізнатися про їх використання." },
+        wiseMen: { title: "Мудреці", description: "Мудреці розповідають про подарунки для Ісуса." },
+        stable: { title: "Стайня", description: "Марія та Йосип розповідають свою історію." },
+        photoZone: { title: "Фотозона", description: "Діти можуть зробити фото з персонажами." }
+    },
+    en: {
+        shepherds: { title: "Shepherds", description: "The shepherds share the miracle and good news." },
+        registration: { title: "Registration", description: "Roman soldiers conduct a census." },
+        carpenter: { title: "Carpenter's Workshop", description: "The carpenter talks about Joseph and demonstrates woodworking." },
+        scribe: { title: "Scribe's Tent", description: "The scribe explains the meaning of Jesus' name." },
+        well: { title: "Bethlehem Well", description: "Children can water the animals at the well." },
+        bakery: { title: "Bakery", description: "In the bakery, children decorate cookies." },
+        spices: { title: "Spice Shop", description: "Children can choose spices and learn about their uses." },
+        wiseMen: { title: "Wise Men", description: "The wise men share stories about the gifts for Jesus." },
+        stable: { title: "Stable", description: "Mary and Joseph share their story." },
+        photoZone: { title: "Photo Zone", description: "Children can take a photo with the characters." }
+    }
+};
+
 let currentLanguage = 'uk';
 
 document.getElementById('uk-btn').addEventListener('click', () => {
@@ -181,56 +208,40 @@ document.getElementById('en-btn').addEventListener('click', () => {
 
 function setLanguage(lang) {
     currentLanguage = lang;
-    const languageData = data[lang];
-
-    if (!languageData) {
-        console.error("Мовні дані не знайдено для мови:", lang);
-        return;
-    }
-
-    // Оновлення заголовку
-    document.getElementById('title').textContent = languageData.title;
-
-    console.log("Мова успішно встановлена на:", lang);
+    console.log("Мова змінена на:", lang);
 }
 
-// Функція для оновлення тексту кнопок зон
 function updateZoneTexts() {
-    const languageData = data[currentLanguage];
-    const zones = ['shepherds', 'registration', 'carpenter', 'scribe', 'well'];
+    const zones = ['shepherds', 'registration', 'carpenter', 'scribe', 'well', 'bakery', 'spices', 'wise-men', 'stable', 'photo-zone'];
 
     zones.forEach(zoneId => {
         const element = document.getElementById(zoneId);
-        if (element) {
-            element.textContent = languageData[zoneId].title;
-        } else {
-            console.error("Елемент з ID не знайдено:", zoneId);
+        const info = data[currentLanguage][zoneId.replace('-', '')];
+        if (element && info) {
+            element.textContent = info.title;
+            element.onclick = () => showInfo(info.title, info.description);
         }
     });
-    console.log("Текст кнопок зон оновлено для мови:", currentLanguage);
 }
 
-function showInfo(zone) {
-    const info = data[currentLanguage][zone];
-    if (info) {
-        document.getElementById('modal-title').textContent = info.title;
-        document.getElementById('modal-description').textContent = info.description;
-        document.getElementById('modal').style.visibility = 'visible';
-        document.getElementById('modal').style.opacity = '1';
-    }
+function showInfo(title, description) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-description').textContent = description;
+    document.getElementById('modal').style.visibility = 'visible';
+    document.getElementById('modal').style.opacity = '1';
 }
 
 document.getElementById('close-btn').addEventListener('click', closeModal);
-
-['shepherds', 'registration', 'carpenter', 'scribe', 'well'].forEach(id => {
-    document.getElementById(id).addEventListener('click', () => showInfo(id));
-});
 
 function closeModal() {
     document.getElementById('modal').style.visibility = 'hidden';
     document.getElementById('modal').style.opacity = '0';
 }
+
+// Ініціалізація текстів при завантаженні сторінки
+updateZoneTexts();
 </script>
+
 
 
 </body>
